@@ -1,0 +1,36 @@
+{
+    "hospitals":[
+        {
+            "name": "Rush Hospital",
+            "image":"https://images1-fabric.practo.com/russh-super-specialty-hospital-hyderabad-1488175205-58b3c0658439d.jpg",
+            "shortAddress": "Suchitra,Hyderabad",
+            "fullAddress":"plot : 32-2255s, suchitra hyderabad",
+            "pincode": "500055",
+            "doctors":[
+                        {
+                            "name": "P Kishore",
+                            "image": "",
+                            "qualification":"MA",
+                            "is_available": true,
+                            "field": "cardio"
+                        }
+                     ] 
+        },
+        {
+            "name": "Rush Hospital",
+            "image":"https://images1-fabric.practo.com/russh-super-specialty-hospital-hyderabad-1488175205-58b3c0658439d.jpg",
+            "shortAddress": "Suchitra,Hyderabad",
+            "fullAddress":"plot : 32-2255s, suchitra hyderabad",
+            "pincode": "500055",
+            "doctors":[
+                        {
+                            "name": "P Kishore",
+                            "image": "",
+                            "qualification":"MA",
+                            "is_available": true,
+                            "field": "cardio"
+                        }
+                     ] 
+        }
+    ]
+}
