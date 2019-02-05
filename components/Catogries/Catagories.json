@@ -1,5 +1,4 @@
-{
-    "hospitals":[
+[
         {
             "name": "Rush Hospital",
             "image":"https://images1-fabric.practo.com/russh-super-specialty-hospital-hyderabad-1488175205-58b3c0658439d.jpg",
@@ -12,7 +11,16 @@
                             "image": "",
                             "qualification":"MA",
                             "is_available": true,
-                            "field": "cardio"
+                            "field": "cardio",
+                            "phonenumber": "97005555322"
+                        },
+                        {
+                            "name": "KL Rahul",
+                            "image": "",
+                            "qualification":"MA",
+                            "is_available": true,
+                            "field": "cardio",
+                            "phonenumber": "97005555322"
                         }
                      ] 
         },
@@ -28,9 +36,9 @@
                             "image": "",
                             "qualification":"MA",
                             "is_available": true,
-                            "field": "cardio"
+                            "field": "cardio",
+                            "phonenumber": "97005555322"
                         }
                      ] 
         }
     ]
-}

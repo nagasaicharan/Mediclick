@@ -1,6 +1,6 @@
 import React from 'react'
 import firebase from 'react-native-firebase';
-import { StyleSheet, Text, TextInput, View, Button,Keyboard,Image,TouchableOpacity ,Alert} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button,Keyboard,Image,TouchableOpacity ,Alert,AsyncStorage} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { TextField } from 'react-native-material-textfield';
 import Globals from "../Globals/Globals";
@@ -44,13 +44,14 @@ export default class Login extends React.Component {
     firebase.auth()
       .createUserWithEmailAndPassword(email, password)
      .then((authData) => {this.setState({loading: false})
-     firebase.database().ref(authData.uid).set({
-        provider: authData.provider,
+     firebase.database().ref("users/"+authData.user._user.uid).set({
+       
         name: name
       });
+      AsyncStorage.setItem('userid',authData.user._user.uid);
+      console.log(authData.user._user.uid);
 
-
-      this.props.navigation.navigate('MainScreen')}
+      this.props.navigation.navigate('Appoinment')}
       ).catch(error =>{
    
       this.setState({ loading: false });

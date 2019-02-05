@@ -6,12 +6,16 @@ import MainScreen from "./MainScreen/MainScreen";
 import Login from "./Loginandsignup/Login";
 import SignUp from "./Loginandsignup/SignUp";
 import Appointment from "./Catlog/Appointment";
+import Emergancy from "./Catlog/Emergancy";
+import WalkIn from "./Catlog/WalkIn";
 const InitialNav = createStackNavigator(
 { 
   MainScreen: {screen: MainScreen},
   Login:{screen: Login},
   SignUp: {screen: SignUp},
   Appointment: {screen: Appointment},
+  Emergancy: {screen:Emergancy},
+  WalkIn: {screen:WalkIn}
 },
   {
      headerMode: "none",

@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import { AsyncStorage,View, Text,TouchableWithoutFeedback,Image} from 'react-native';
 import { Container} from 'native-base';
 import Swiper from 'react-native-swiper';
+import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Globals from '../Globals/Globals';
 import EIcon from 'react-native-vector-icons/Entypo';
@@ -14,9 +15,16 @@ export default class FundDescription extends Component
             super(props);	 
             this.state = { currentUser: null }
       }
-     componentWillMount(){
+     componentDidMount(){
            // check if user already loggin or not by check value in async-storage
-           this.checkLoggedOrNot();
+           firebase.auth().onAuthStateChanged(user => {
+            console.log(user);
+            if(user)
+            {
+            this.props.navigation.navigate('Appointment')}
+          }
+            )
+          // this.checkLoggedOrNot();
      }
 
 
@@ -25,9 +33,13 @@ export default class FundDescription extends Component
       
 
      async checkLoggedOrNot(){
+       console.log("Asac")
            try {
-            const { user } = firebase.auth()
-            this.setState({ currentUser: user });
+          
+
+              
+          
+
            } 
            catch (error){
                  

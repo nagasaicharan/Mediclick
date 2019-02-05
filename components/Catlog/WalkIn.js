@@ -7,7 +7,7 @@ import Globals from "../Globals/Globals";
 import Loader from "../Loader/Loader";
 import Ripple from 'react-native-material-ripple';  
 import { Container, Header, Left, Body, Right, Title,Content,ButtonBase} from 'native-base';
-export default class Appointment extends React.Component {
+export default class Emergency extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = { 
@@ -23,37 +23,55 @@ export default class Appointment extends React.Component {
     }
     handleLogOut()
     {
-                    firebase.auth().signOut()
-            .then(()=> {
-                this.props.navigation.navigate("MainScreen");
-            })
-        
-            .catch((error) =>{
-            console.log(error)
-            });
+        firebase.auth().signOut()
+  .then(function() {
+    this.props.navigation.navigate("MainScreen");
+  })
+  .catch(function(error) {
+   console.log(error)
+  });
     }
+    handleSignUp = () => {
+    const { email, password,name } = this.state
+    if(this.state.email=="")
+    {
+     Snackbar.show({
+       title: "Email cannot be empty",
+        duration: Snackbar.LENGTH_SHORT,
+   })
+    }else if(this.state.password=="")
+    {
+     Snackbar.show({
+       title: "Password Cannot be empty",
+        duration: Snackbar.LENGTH_SHORT,
+   })
+    }else if(this.state.name=="")
+    {
+     Snackbar.show({
+       title: "Name cannot be empty",
+        duration: Snackbar.LENGTH_SHORT,
+   })
+    }else{
+        this.setState({loading: true});
+    firebase.auth()
+      .createUserWithEmailAndPassword(email, password)
+     .then((authData) => {this.setState({loading: false})
+     firebase.database().ref(authData.uid).set({
+        provider: authData.provider,
+        name: name
+      });
 
-    componentWillUnmount() {
-        BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
-        this.subs.forEach((sub) => {
-          sub.remove();
-        });
-      }
 
-      handleBackButton = () => {
-        Alert.alert("Confirm exit", "Do you want to quit the app?", [
-          { text: "OK", onPress: () => BackHandler.exitApp() },
-          { text: "CANCEL" }
-        ]);
-        return true;
-      };
+      this.props.navigation.navigate('Appointment')}
+      ).catch(error =>{
+   
+      this.setState({ loading: false });
+      Alert.alert(error.message)}
 
-      componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-      }
-
-
-    
+      )
+    }
+  
+  }
   render() {
     return (
       <Container>
@@ -61,12 +79,12 @@ export default class Appointment extends React.Component {
       <View style={{padding: 18,flex:1}}>
       <Image source={require("../images/logocolor.png")} style={{alignSelf: 'center',width: 200,height: 90,marginTop: 20}} resizeMode="contain"/>
       <Text style={{fontSize: 28,color: Globals.COLORAPP.YELLOWBUTTON,fontWeight: 'bold',alignSelf: 'center'}}>Book Your Appointment</Text>
-          <Ripple onPress={()=>{this.props.navigation.navigate("Emergancy")}}>
+          <Ripple>
                   <View style={{alignSelf: 'center',paddingHorizontal: 20,paddingVertical:15,borderRadius: 5,borderColor:Globals.COLORAPP.BLUE,marginTop: 15,borderWidth: 1.5}}>
                             <Text style={{color: Globals.COLORAPP.BLUE,fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>Emergency</Text>
                         </View>
           </Ripple>
-          <Ripple onPress={()=>{this.props.navigation.navigate("Emergancy")}}>
+          <Ripple>
                   <View style={{alignSelf: 'center',paddingHorizontal: 20,paddingVertical:15,borderRadius: 5,borderColor:Globals.COLORAPP.BLUE,marginTop: 15,borderWidth: 1.5}}>
                             <Text style={{color: Globals.COLORAPP.BLUE,fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>Walk-in</Text>
                         </View>
