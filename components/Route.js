@@ -8,6 +8,9 @@ import SignUp from "./Loginandsignup/SignUp";
 import Appointment from "./Catlog/Appointment";
 import Emergancy from "./Catlog/Emergancy";
 import WalkIn from "./Catlog/WalkIn";
+import Normal from "./Catlog/Normal";
+import Booking from "./Catlog/BookingScreen";
+import MyBooking from "./Catlog/MyBooking"
 const InitialNav = createStackNavigator(
 { 
   MainScreen: {screen: MainScreen},
@@ -15,7 +18,10 @@ const InitialNav = createStackNavigator(
   SignUp: {screen: SignUp},
   Appointment: {screen: Appointment},
   Emergancy: {screen:Emergancy},
-  WalkIn: {screen:WalkIn}
+  WalkIn: {screen:WalkIn},
+  Normal: {screen: Normal},
+  Booking:{screen: Booking},
+  MyBooking:{screen: MyBooking}
 },
   {
      headerMode: "none",

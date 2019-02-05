@@ -1,6 +1,6 @@
 import React from 'react'
 import firebase from 'react-native-firebase';
-import { StyleSheet, Text,FlatList, TextInput, View,Keyboard,Image,TouchableOpacity ,Alert,TimePickerAndroid} from 'react-native';
+import { StyleSheet, Text,FlatList, TextInput,ActivityIndicator, View,Keyboard,Image,TouchableOpacity ,Alert,TimePickerAndroid} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { TextField } from 'react-native-material-textfield';
 import Globals from "../Globals/Globals";
@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 import Ripple from 'react-native-material-ripple';  
 import { Container, Header, Left, Body, Right, Title,Content,Button,Icon as NIcon,Card} from 'native-base';
 
-export default class Emergency extends React.Component {
+export default class Normal extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = { 
@@ -23,6 +23,9 @@ export default class Emergency extends React.Component {
 
         }
         
+    }
+    componentDidMount(){
+        this.handleEmergancy();
     }
     handleLogOut()
     {
@@ -46,12 +49,6 @@ export default class Emergency extends React.Component {
                      title: "Please enter valid pincode",
                          duration: Snackbar.LENGTH_SHORT,
               })
-             }else if(this.state.time==""){
-                
-                    Snackbar.show({
-                    title: "Please select time",
-                        duration: Snackbar.LENGTH_SHORT,
-                   });
              }else{
                  console.log("entered");
            firebase.database().ref("hospitals/").on('value', (snapshot) => {
@@ -102,20 +99,22 @@ renderItem1=(items)=>
 {
     console.log(items.item);
     return(
-    <Card style={{padding: 5}}>
+        <Ripple onPress={()=>this.props.navigation.navigate("Booking",{data: items.item})}>
+    <Card style={{padding: 10,borderRadius: 10}}>
         <View style={{flexDirection: 'row'}}>
-        <Image source={{uri:items.item.image}} style={{height: 60, width: 60}} resizeMode="contain"/>
-        <View style={{flexDirection: 'column'}}>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Hospital Name: {items.item.name}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Address: {items.item.fullAddress}</Text>
+        <Image source={{uri:items.item.image}} style={{height: 60, width: 60,flex: 1}} resizeMode="contain"/>
+        <View style={{flexDirection: 'column',flex:2}}>
+                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15,fontSize: 18}}>{items.item.name}</Text>
+                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>{items.item.shortAddress}</Text>
                    </View>
                     </View>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
+                    {/* <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
                     <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Name: {items.item.doctors[0].name}</Text>
                     <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Qualification: {items.item.doctors[0].qualification}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {items.item.doctors[0].phonenumber}</Text>
+                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {items.item.doctors[0].phonenumber}</Text> */}
      
     </Card>
+    </Ripple>
     );
 }
   render() {
@@ -173,37 +172,21 @@ renderItem1=(items)=>
                                     </Button>
                                 </Left>
                                 <Body>
-                                    <Title>WalkIn Booking</Title>
+                                    <Title>Normal Booking</Title>
                                 </Body>
                                 <Right/>
                               
                         </Header>
       <Content>
-      <View style={{padding: 18,flex:1}}>
-      <TextField
-                          
-                          label='Enter PinCode'
-                          tintColor={Globals.COLORAPP.BLUE}
-                          onChangeText={ (value) => this.setState({ pincode: value}) }
-                        value={this.state.pincode}
-                        keyboardType="numeric"
-                        maxLength={6}
-                     />
-                     <Ripple onPress={()=>this.timePicker()}>
-                     {this.state.time==""?<Text style={{color: 'black',fontSize: 20,textAlign: 'center'}}>SELECT TIME</Text>:<Text style={{color: 'black',fontSize: 20,textAlign: 'center'}}>Time : {this.state.time}</Text>}
-                     </Ripple>
-                     <Ripple onPress={()=>this.handleEmergancy()}>
-                  <View style={{alignSelf: 'center',paddingHorizontal: 20,paddingVertical:15,borderRadius: 5,backgroundColor:Globals.COLORAPP.YELLOWBUTTON,marginTop: 15}}>
-                            <Text style={{color: "white",fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>SEARCH NOW</Text>
-                        </View>
-                        
-                    </Ripple>
 
-        
+      <View style={{padding: 18,flex:1}}>
+                {count!=0 ? <FlatList 
+                    data={this.state.result}
+                    renderItem={this.renderItem1}/>:<ActivityIndicator/>}
                            <View>
                           
-                    {this.state.noresultmessage? <Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>:
-                               <View>{data}</View>}
+                    {/* {this.state.noresultmessage? <Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>:
+                               <View>{data}</View>} */}
                            </View>
                       
       </View>

@@ -19,7 +19,7 @@ export default class Emergency extends React.Component {
             password: "",
             loading: false,
             pincode: "",
-            result: [],
+            result: {},
             noresultmessage: false
         
 
@@ -50,8 +50,8 @@ export default class Emergency extends React.Component {
              })
             }else{
                 console.log("entered");
-          firebase.database().ref("hospitals/").orderByChild("pincode").equalTo(this.state.pincode).on('value', (snapshot) => {
-                       
+          firebase.database().ref("hospitals/").on('value', (snapshot) => {
+         
                   console.log(snapshot.val());
                   this.setState({
                     loading:false,
@@ -64,6 +64,8 @@ export default class Emergency extends React.Component {
                     
                     }); 
                   }else{
+                    var key2 = Object.keys(snapshot.val())[0];  
+                      
                     this.setState({
                         result: snapshot.val()
                     });
@@ -121,19 +123,26 @@ export default class Emergency extends React.Component {
         if(count!=0)
                   { 
                  
-                data.push(<View style={{marginTop: 5}}>
-                <View style={{flexDirection: 'row'}}>
-                   <Image source={{uri: this.state.result[0].image}} style={{height: 60, width: 60}} resizeMode="contain"/>
-                   <View style={{flexDirection: 'column'}}>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Hospital Name: {this.state.result[0].name}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Address: {this.state.result[0].fullAddress}</Text>
-                   </View>
-                    </View>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Name: {this.state.result[0].doctors[0].name}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Qualification: {this.state.result[0].doctors[0].qualification}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {this.state.result[0].doctors[0].phonenumber}</Text>
-                </View>);
+
+                    this.state.result.map((item, index) => {
+                        if(item.pincode==this.state.pincode)
+                        {
+                            data.push(<View style={{marginTop: 5}}>
+                                <View style={{flexDirection: 'row'}}>
+                                   <Image source={{uri: item.image}} style={{height: 60, width: 60}} resizeMode="contain"/>
+                                   <View style={{flexDirection: 'column'}}>
+                                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Hospital Name: {item.name}</Text>
+                                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Address: {item.fullAddress}</Text>
+                                   </View>
+                                    </View>
+                                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
+                                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Name: {item.doctors[0].name}</Text>
+                                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Qualification: {item.doctors[0].qualification}</Text>
+                                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {item.doctors[0].phonenumber}</Text>
+                                </View>);
+                        }
+                      })
+               
                    
                   }else{
 

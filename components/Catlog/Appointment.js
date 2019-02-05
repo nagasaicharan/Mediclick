@@ -1,6 +1,6 @@
 import React from 'react'
 import firebase from 'react-native-firebase';
-import { StyleSheet, Text, TextInput, View, Button,Keyboard,Image,TouchableOpacity ,Alert} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button,Keyboard,Image,TouchableOpacity ,Alert,BackHandler} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { TextField } from 'react-native-material-textfield';
 import Globals from "../Globals/Globals";
@@ -33,11 +33,10 @@ export default class Appointment extends React.Component {
             });
     }
 
-    componentWillUnmount() {
-        BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
-        this.subs.forEach((sub) => {
-          sub.remove();
-        });
+    componentDidMount() {
+      console.log("Mount")
+      BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+        
       }
 
       handleBackButton = () => {
@@ -49,7 +48,7 @@ export default class Appointment extends React.Component {
       };
 
       componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
       }
 
 
@@ -66,20 +65,20 @@ export default class Appointment extends React.Component {
                             <Text style={{color: Globals.COLORAPP.BLUE,fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>Emergency</Text>
                         </View>
           </Ripple>
-          <Ripple onPress={()=>{this.props.navigation.navigate("Emergancy")}}>
+          <Ripple onPress={()=>{this.props.navigation.navigate("WalkIn")}}>
                   <View style={{alignSelf: 'center',paddingHorizontal: 20,paddingVertical:15,borderRadius: 5,borderColor:Globals.COLORAPP.BLUE,marginTop: 15,borderWidth: 1.5}}>
                             <Text style={{color: Globals.COLORAPP.BLUE,fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>Walk-in</Text>
                         </View>
           </Ripple>
         
 
-          <Ripple>
+          <Ripple onPress={()=>{this.props.navigation.navigate("Normal")}}>
                   <View style={{alignSelf: 'center',paddingHorizontal: 20,paddingVertical:15,borderRadius: 5,borderColor:Globals.COLORAPP.BLUE,marginTop: 15,borderWidth: 1.5}}>
                             <Text style={{color: Globals.COLORAPP.BLUE,fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>Normal</Text>
                         </View>
           </Ripple>
          
-          <Ripple>
+          <Ripple onPress={()=>{this.props.navigation.navigate("MyBooking")}}>
                   <View style={{alignSelf: 'center',paddingHorizontal: 20,paddingVertical:15,borderRadius: 5,borderColor:Globals.COLORAPP.BLUE,marginTop: 45,borderWidth: 1.5}}>
                             <Text style={{color: Globals.COLORAPP.BLUE,fontWeight: 'bold',marginLeft: 8,marginRight: 8}}>My Bookings</Text>
                         </View>
