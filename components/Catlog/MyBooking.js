@@ -75,6 +75,41 @@ export default class Normal extends React.Component {
           
             
      }
+     handleCancel=(value)=>
+    {
+        this.setState({loading:true});
+        const data = this.props.navigation.getParam('data', 'nodata');
+       
+      
+         // const userid = AsyncStorage.getItem('userid');
+         let userid=""
+          firebase.auth().onAuthStateChanged(user => {
+            console.log(user);
+            if(user)
+            {
+      userid=user._user.uid;
+           }
+          });
+          console.log(userid);
+        firebase.database().ref('users/'+userid+"/booking/"+value).remove().then((data)=>{
+       
+        this.setState({loading:false});
+        Alert.alert(
+            'Booking Cancelled'
+           
+          );
+
+       
+        }).catch((error)=>{
+            //error callback"
+           // Alert.alert("Your already registered for the "+data2.name+" Register for another Events");
+            this.setState({loading:false,fail: true});
+            console.log('error ' , error)
+        })
+
+
+ 
+    }
  
 
 renderItem1=(items)=>
@@ -125,8 +160,10 @@ renderItem1=(items)=>
                                            <Text style={{color: 'black',marginLeft: 15,marginTop: 8}}>Address: {value.hospital_Address}</Text>
                                            <Text style={{color: 'black',marginLeft: 15,marginTop: 8}}>Doctor Name: {value.doctor_name}</Text>
                                            <Text style={{color: 'black',marginLeft: 15,marginTop: 8,marginBottom: 5}}>Qualification: {value.qualification}</Text>
-                                          
-
+                                           <Ripple  onPress={()=>this.handleCancel(value.doctor_name)}>
+                                           <View style={{backgroundColor: Globals.COLORAPP.YELLOWBUTTON,padding: 8,margin: 5,alignSelf: 'flex-end'}}><Text style={{fontWeight: 'bold',color: 'white',marginHorizontal: 8}}>CANCEL</Text></View>
+                                           </Ripple>
+                                  
                              
                             </Card>
                                         

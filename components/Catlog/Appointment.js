@@ -8,8 +8,13 @@ import Loader from "../Loader/Loader";
 import Ripple from 'react-native-material-ripple';  
 import { Container, Header, Left, Body, Right, Title,Content,ButtonBase} from 'native-base';
 export default class Appointment extends React.Component {
+  _didFocusSubscription;
+  _willBlurSubscription;
     constructor(props) {
-		super(props);
+    super(props);
+    this._didFocusSubscription = props.navigation.addListener('didFocus', payload =>
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
+  );
 		this.state = { 
          
           
@@ -35,7 +40,9 @@ export default class Appointment extends React.Component {
 
     componentDidMount() {
       console.log("Mount")
-      BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+      this._willBlurSubscription = this.props.navigation.addListener('willBlur', payload =>
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton)
+    );
         
       }
 
@@ -48,7 +55,8 @@ export default class Appointment extends React.Component {
       };
 
       componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        this._didFocusSubscription && this._didFocusSubscription.remove();
+    this._willBlurSubscription && this._willBlurSubscription.remove();
       }
 
 
