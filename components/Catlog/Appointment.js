@@ -31,9 +31,7 @@ export default class Appointment extends React.Component {
                     firebase.auth().signOut()
             .then(()=> {
                 this.props.navigation.navigate("MainScreen");
-            })
-        
-            .catch((error) =>{
+            }).catch((error) =>{
             console.log(error)
             });
     }

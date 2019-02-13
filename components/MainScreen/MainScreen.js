@@ -8,7 +8,7 @@ import Globals from '../Globals/Globals';
 import EIcon from 'react-native-vector-icons/Entypo';
 
 
-export default class FundDescription extends Component 
+export default class MainScreen extends Component 
 {
       constructor(props) 
       {
@@ -24,7 +24,7 @@ export default class FundDescription extends Component
             this.props.navigation.navigate('Appointment')}
           }
             )
-          // this.checkLoggedOrNot();
+        
      }
 
 
@@ -32,19 +32,7 @@ export default class FundDescription extends Component
     
       
 
-     async checkLoggedOrNot(){
-       console.log("Asac")
-           try {
-          
-
-              
-          
-
-           } 
-           catch (error){
-                 
-           } 
-     }
+     
      render() 
       {
        

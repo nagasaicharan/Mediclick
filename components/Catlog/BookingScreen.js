@@ -7,7 +7,7 @@ import Globals from "../Globals/Globals";
 import Loader from "../Loader/Loader";
 import Ripple from 'react-native-material-ripple';  
 import { Container, Header, Left, Body, Right, Title,Content,Button,Icon as NIcon,Card} from 'native-base';
-
+import DoctorView from "./DoctorView";
 export default class BookingScreen extends React.Component {
     constructor(props) {
 		super(props);
@@ -56,9 +56,7 @@ export default class BookingScreen extends React.Component {
                    }else{
                      this.setState({
                          result: snapshot.val()
-                     });
-                   }
-                 
+                     });                   }                 
                  
                     });
              }
@@ -86,13 +84,13 @@ export default class BookingScreen extends React.Component {
           userid=user._user.uid;
                }
               });
-              console.log(userid);
+             
             firebase.database().ref('users/'+userid+"/booking/"+doctor.name).set(abc).then((data)=>{
            
             this.setState({loading:false});
             Alert.alert(
                 'Booking Success',
-               '',
+               'You can visit the hospital in 9.00AM to 4.00PM',
                 [
                   
                   {text: 'My Booking', onPress: () => { this.props.navigation.navigate("MyBooking")}},
@@ -133,26 +131,10 @@ export default class BookingScreen extends React.Component {
 
 renderItem1=(items)=>
 {
-    console.log(items.item);
+    const hospitaldata = this.props.navigation.getParam('data', 'nodata');
     return(
         
-    <Card style={{padding: 10,borderRadius: 10}}>
-        
-        {/* <Image source={{uri:items.item.image}} style={{height: 60, width: 60,flex: 1}} resizeMode="contain"/> */}
-        
-                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15,fontSize: 18}}>Name: {items.item.name}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Qualification: {items.item.qualification}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Mobile Number: {items.item.phonenumber}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Field: {items.item.field}</Text>
-                   <Ripple  onPress={()=>{this.handleBook(items.item)}}>
-                   <View style={{backgroundColor: Globals.COLORAPP.BLUE,padding: 8,alignSelf: 'flex-end'}}><Text style={{fontWeight: 'bold',color: 'white',marginHorizontal: 8}}>BOOK NOW</Text></View></Ripple>
-                  
-                    {/* <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Name: {items.item.doctors[0].name}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Qualification: {items.item.doctors[0].qualification}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {items.item.doctors[0].phonenumber}</Text> */}
-     
-    </Card>
+    <DoctorView data={items.item} hospitaldata={hospitaldata} propw={this.props}/>
    
     );
 }

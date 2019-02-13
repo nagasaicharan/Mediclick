@@ -26,20 +26,23 @@ export default class Login extends React.Component {
      Snackbar.show({
        title: "Email cannot be empty",
         duration: Snackbar.LENGTH_SHORT,
-   })
+      })
     }else if(this.state.password=="")
     {
      Snackbar.show({
        title: "Password Cannot be empty",
         duration: Snackbar.LENGTH_SHORT,
-   })
+   });
     } else{
         this.setState({loading: true});
     firebase.auth()
       .signInWithEmailAndPassword(email, password)
       .then((authData) => {this.setState({loading: false})
+
       console.log(authData.user._user.uid);
+
       AsyncStorage.setItem('userid',authData.user._user.uid);
+      
       this.props.navigation.navigate('Appointment')}
       ).catch(error =>{
    
@@ -48,6 +51,11 @@ export default class Login extends React.Component {
 
       )
     }
+  }
+
+  componentDidMount()
+  {
+    
   }
   render() {
     return (

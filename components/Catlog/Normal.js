@@ -27,16 +27,7 @@ export default class Normal extends React.Component {
     componentDidMount(){
         this.handleEmergancy();
     }
-    handleLogOut()
-    {
-        firebase.auth().signOut()
-  .then(function() {
-    this.props.navigation.navigate("MainScreen");
-  })
-  .catch(function(error) {
-   console.log(error)
-  });
-    }
+   
     handleEmergancy()
     {
          this.setState({
@@ -75,26 +66,7 @@ export default class Normal extends React.Component {
              }
             
      }
-  async timePicker(){
 
-    try {
-        const {action, hour, minute} = await TimePickerAndroid.open({
-            hour: 14,
-            minute: 0,
-            is24Hour: false, // Will display '2 PM'
-        });
-        if (action !== TimePickerAndroid.dismissedAction) {
-            // Selected hour (0-23), minute (0-59)
-            //Applying extra 0 before the hour/minute for better visibility
-            // 9 minutes => 09 minutes
-            var m=(minute<10)?"0"+minute:minute;
-            var h=(hour<10)?"0"+hour:hour;
-            this.setState({ time:h+":"+m})
-        }
-    } catch ({code, message}) {
-        alert('Cannot open time picker'+message);
-    }
-}
 renderItem1=(items)=>
 {
     console.log(items.item);
@@ -118,50 +90,7 @@ renderItem1=(items)=>
     );
 }
   render() {
-
-    let data=[];
-    var count = Object.keys(this.state.result).length;
-        if(count!=0)
-                  { 
-                    this.state.result.map((item, index) => {
-                        if(item.pincode==this.state.pincode)
-                        {
-                data.push(<View style={{marginTop: 5}}>
-   
-
-                  {/* <FlatList
-                  data={item}
-                  renderItem={this.renderItem1}
-                  /> */}
-
-                
-    <Card style={{padding: 5}}>
-        <View style={{flexDirection: 'row'}}>
-        <Image source={{uri:item.image}} style={{height: 60, width: 60}} resizeMode="contain"/>
-        <View style={{flexDirection: 'column'}}>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Hospital Name: {item.name}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Address: {item.fullAddress}</Text>
-                   </View>
-                    </View>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Name: {item.doctors[0].name}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Qualification: {item.doctors[0].qualification}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {item.doctors[0].phonenumber}</Text>
-     
-    </Card>
-                
-                   {/* <View style={{flexDirection: 'column'}}>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Hospital Name: {items.item.name}</Text>
-                   <Text style={{color: 'black',fontWeight: 'bold',marginLeft: 15}}>Address: {items.item.fullAddress}</Text>
-                   </View>
-                    </View>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Available doctors</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Name: {items.item.doctors[0].name}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Qualification: {items.item.doctors[0].qualification}</Text>
-                    <Text style={{color: 'black',fontWeight: 'bold',marginTop: 5}}>Mobile Number: {items.item.doctors[0].phonenumber}</Text> */}
-                </View>);
-                   
-                  }});}
+   var count=Object.keys(this.state.result).length;
     return (
       <Container>
         <Header style={{backgroundColor: Globals.COLORAPP.BLUE}}>

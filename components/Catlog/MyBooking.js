@@ -160,6 +160,11 @@ renderItem1=(items)=>
                                            <Text style={{color: 'black',marginLeft: 15,marginTop: 8}}>Address: {value.hospital_Address}</Text>
                                            <Text style={{color: 'black',marginLeft: 15,marginTop: 8}}>Doctor Name: {value.doctor_name}</Text>
                                            <Text style={{color: 'black',marginLeft: 15,marginTop: 8,marginBottom: 5}}>Qualification: {value.qualification}</Text>
+                                           <Text style={{color: 'black',marginLeft: 15,marginTop: 8,marginBottom: 8,fontWeight: 'bold'}}>Patient Details</Text>
+                                           <Text style={{color: 'black',marginLeft: 15,marginTop: 8,marginBottom: 8,fontWeight: 'bold'}}>Patient Name: {value.patient_name}</Text>
+                                           <Text style={{color: 'black',marginLeft: 15,marginTop: 8,marginBottom: 8,fontWeight: 'bold'}}>Patient Age: {value.patient_age}</Text>
+                                           <Text style={{color: 'black',marginLeft: 15,marginTop: 8,marginBottom: 8,fontWeight: 'bold'}}>Patient Number: {value.patient_phone}</Text>
+
                                            <Ripple  onPress={()=>this.handleCancel(value.doctor_name)}>
                                            <View style={{backgroundColor: Globals.COLORAPP.YELLOWBUTTON,padding: 8,margin: 5,alignSelf: 'flex-end'}}><Text style={{fontWeight: 'bold',color: 'white',marginHorizontal: 8}}>CANCEL</Text></View>
                                            </Ripple>

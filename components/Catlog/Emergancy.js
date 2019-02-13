@@ -26,20 +26,12 @@ export default class Emergency extends React.Component {
         }
         
     }
-    handleLogOut()
-    {
-        firebase.auth().signOut()
-  .then(function() {
-    this.props.navigation.navigate("MainScreen");
-  })
-  .catch(function(error) {
-   console.log(error)
-  });
-    }
+  
+    
     handleEmergancy()
    {
         this.setState({
-            noresultmessage:false,
+            noresultmessage:true,
             loading: true
         }); 
             if(this.state.pincode=="")
@@ -76,47 +68,9 @@ export default class Emergency extends React.Component {
             }
            
     }
-    handleSignUp = () => {
-    const { email, password,name } = this.state
-    if(this.state.email=="")
-    {
-     Snackbar.show({
-       title: "Email cannot be empty",
-        duration: Snackbar.LENGTH_SHORT,
-   })
-    }else if(this.state.password=="")
-    {
-     Snackbar.show({
-       title: "Password Cannot be empty",
-        duration: Snackbar.LENGTH_SHORT,
-   })
-    }else if(this.state.name=="")
-    {
-     Snackbar.show({
-       title: "Name cannot be empty",
-        duration: Snackbar.LENGTH_SHORT,
-   })
-    }else{
-        this.setState({loading: true});
-    firebase.auth()
-      .createUserWithEmailAndPassword(email, password)
-     .then((authData) => {this.setState({loading: false})
-     firebase.database().ref(authData.uid).set({
-        provider: authData.provider,
-        name: name
-      });
-
-
-      this.props.navigation.navigate('Appointment')}
-      ).catch(error =>{
-   
-      this.setState({ loading: false });
-      Alert.alert(error.message)}
-
-      )
-    }
+    
   
-  }
+ 
   render() {
     let data=[];
     var count = Object.keys(this.state.result).length;
