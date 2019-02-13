@@ -31,7 +31,7 @@ export default class Emergency extends React.Component {
     handleEmergancy()
    {
         this.setState({
-            noresultmessage:true,
+            noresultmessage:false,
             loading: true
         }); 
             if(this.state.pincode=="")
@@ -52,7 +52,7 @@ export default class Emergency extends React.Component {
                   if(snapshot.val()===null)
                   {
                     this.setState({
-                        noresultmessage:true,
+                        noresultmessage:false,
                     
                     }); 
                   }else{
@@ -98,10 +98,14 @@ export default class Emergency extends React.Component {
                       })
                
                    
-                  }else{
-
                   }
-   // data.push(<Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>);
+                    
+                  if(Object.keys(data).length==0)
+                  {
+                    data.push(<Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>);
+                
+                  }
+   // 
     return (
       <Container>
         <Header style={{backgroundColor: Globals.COLORAPP.BLUE}}>
@@ -137,8 +141,8 @@ export default class Emergency extends React.Component {
         
                            <View>
                           
-                    {this.state.noresultmessage? <Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>:
-                               <View>{data}</View>}
+                    
+                               <View>{data}</View>
                            </View>
                       
       </View>

@@ -36,10 +36,7 @@ export default class Emergency extends React.Component {
     }
     handleEmergancy()
     {
-         this.setState({
-             noresultmessage:true,
-             loading: true
-         }); 
+        
              if(this.state.pincode=="")
              {
                      Snackbar.show({
@@ -53,7 +50,11 @@ export default class Emergency extends React.Component {
                         duration: Snackbar.LENGTH_SHORT,
                    });
              }else{
-                 console.log("entered");
+                this.setState({
+           
+                    loading: true
+                }); 
+                
            firebase.database().ref("hospitals/").on('value', (snapshot) => {
                         
                    console.log(snapshot.val());
@@ -163,6 +164,11 @@ renderItem1=(items)=>
                 </View>);
                    
                   }});}
+                  if(Object.keys(data).length==0)
+                  {
+                    data.push(<Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>);
+                
+                  }
     return (
       <Container>
         <Header style={{backgroundColor: Globals.COLORAPP.BLUE}}>
@@ -202,8 +208,8 @@ renderItem1=(items)=>
         
                            <View>
                           
-                    {this.state.noresultmessage? <Text style={{marginTop: 12,fontSize: 12}}>No Hospitals found in your Area</Text>:
-                               <View>{data}</View>}
+                  
+                               <View>{data}</View>
                            </View>
                       
       </View>
